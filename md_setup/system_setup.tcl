@@ -149,13 +149,12 @@ proc constrined_fixed_files {{molid top}} {
 
 ########### code initializations  ###########
 
-set input 411_docked_u
-set box [getbox_of_system $input -cube_padsize 7]
 
-getpsf ${input}_c "Yes"
-
-getsolv ${input}_cp $box
-getionze ${input}_cpw
-constrined_fixed_files
-
-source "/media/anupkumar/Backup\ Plus/scripts/tcl/system_info.tcl"
+proc md_setup {pdbfile {cter_amidation "No"}} {
+	set box [getbox_of_system $pdbfile -cube_padsize 7]
+	getpsf ${pdbfile}_c $cter_amidation
+	getsolv ${pdbfile}_cp $box
+	getionze ${pdbfile}_cpw
+	constrined_fixed_files
+	source "/media/anupkumar/Backup\ Plus/scripts/tcl/system_info.tcl"
+}

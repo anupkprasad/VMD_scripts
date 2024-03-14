@@ -67,7 +67,6 @@ proc get_aminoseq {{molid top}} {
 }
 
 
-
 proc assign_uniqueid {pdbfile} {
 	mol new $pdbfile.pdb
 	pbc set {0 0 0} 
