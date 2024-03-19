@@ -34,18 +34,24 @@ proc get_aminoseq {{molid top}} {
 	}
 	set cter [atomselect $molid "resid [lindex $uresid end]"]
 	set cter_atms [$cter get name]
+	set is_NH2 "No"
 	if {[lsearch -exact $cter_atms "NT"] >= 0} {
     append amino_acids "-NH2"
+    set is_NH2 "Yes"
 	}
 	$sel delete
-	return $amino_acids
+	return [list $amino_acids $is_NH2]
 }
 
-proc all_info {{molid top} {file_info "No"}} {
-	set aa_seqs "Amino acid Sequence: [get_aminoseq $molid]"
-	set aa_num "Peptide length: [expr [llength [split [get_aminoseq $molid] ""]] - 4]"
+proc sys_info {{molid top} {file_info "No"}} {
+	set aa_seqs "Amino acid Sequence: [lindex [get_aminoseq $molid] 0]"
+	if {[lindex [get_aminoseq $molid] 1] == "Yes"} {
+		set aa_num "Peptide length: [expr [llength [split [lindex [get_aminoseq $molid] 0] ""]] - 4]"
+	} else {
+		set aa_num "Peptide length: [llength [split [lindex [get_aminoseq $molid] 0] ""]]"
+	}
 	set cell_dimention "system dimention: [get_cell $molid]"
-	set frame "Frame_num: [molinfo top get frame]"
+	set frame "Frame_num: [molinfo top get numframes]"
 	set Schar "System charge: [eval "vecadd [[atomselect $molid all] get charge]"]"
 	set Pchar "Peptide charge: [eval "vecadd [[atomselect $molid "protein"] get charge]"]"
 	set all "all_atoms_num: [[atomselect top all] num]"

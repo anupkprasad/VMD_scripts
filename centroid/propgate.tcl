@@ -55,7 +55,7 @@ proc load_dockedfiles { } {
     foreach pdb $docked_pdbs {
         puts $pdb
         mol new $pdb
-        set clash_atoms [measure contacts 1.5 [atomselect top "noh"]]
+        set clash_atoms [measure contacts 1.5 [atomselect top all]]
         set atom_num [llength [lindex $clash_atoms 0]]
         if {$atom_num != 0} {
             mol delete top

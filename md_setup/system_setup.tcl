@@ -152,7 +152,7 @@ proc constrined_fixed_files {{molid top}} {
 
 proc md_setup {pdbfile {cter_amidation "No"}} {
 	set box [getbox_of_system $pdbfile -cube_padsize 7]
-	getpsf ${pdbfile}_c $cter_amidation
+	#getpsf ${pdbfile}_c $cter_amidation
 	getsolv ${pdbfile}_cp $box
 	getionze ${pdbfile}_cpw
 	constrined_fixed_files
